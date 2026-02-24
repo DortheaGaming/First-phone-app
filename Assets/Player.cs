@@ -7,10 +7,12 @@ public class Player : MonoBehaviour
     [SerializeField] float moveSpeed;
     Rigidbody2D rb;
     [SerializeField] inputSys inputsys; 
+    public DodgerAttributes myPlayerHS;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        myPlayerHS = new DodgerAttributes(5, 5, 0); 
     }
 
     // Update is called once per frame
@@ -46,11 +48,17 @@ public class Player : MonoBehaviour
     }
 
 
-        void OnCollisionEnter2D(Collision2D collision)
+        void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            SceneManager.LoadScene(0);
+            myPlayerHS.ChangeHealth(-1);
+
+            if (myPlayerHS.GetHealth() <= 0) 
+            {
+                SceneManager.LoadScene(0);
+            }
+            
         }
     }
 }

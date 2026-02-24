@@ -7,11 +7,16 @@ public class GameManagerScript : MonoBehaviour
     public GameObject enemyPrefab;
 [SerializeField] float spamRate;
 bool gameStarted = false;
-int score = 0;
 Vector2 screenPos;
 [SerializeField] TextMeshProUGUI scoreText;
 public GameObject tapText;
-
+private Player player;
+    
+    void Start() 
+    {
+        player = FindObjectOfType<Player>();
+    }
+    
     void SpawnEnemy()
     {
         float randomX = Random.Range(0f, 1f);
@@ -22,9 +27,9 @@ public GameObject tapText;
 
         Instantiate(enemyPrefab, worldPos, Quaternion.identity);
 
-        score++; 
+        player.myPlayerHS.ChangeScore(1);
 
-        UpdateText(score);
+        UpdateText(player.myPlayerHS.GetScore());
     }
 
     void StartSpawning()
