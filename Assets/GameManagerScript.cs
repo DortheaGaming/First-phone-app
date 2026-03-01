@@ -11,10 +11,11 @@ Vector2 screenPos;
 [SerializeField] TextMeshProUGUI scoreText;
 public GameObject tapText;
 private Player player;
+public GameObject[] brickPref = new GameObject[2];
     
     void Start() 
     {
-        player = FindObjectOfType<Player>();
+        player = Object.FindFirstObjectByType<Player>();
     }
     
     void SpawnEnemy()
@@ -25,7 +26,8 @@ private Player player;
 
         Vector2 worldPos = Camera.main.ViewportToWorldPoint(viewportPos);
 
-        Instantiate(enemyPrefab, worldPos, Quaternion.identity);
+        int randomIndex = Random.Range(0, brickPref.Length);
+        Instantiate(brickPref[randomIndex], worldPos, Quaternion.identity);
 
         player.myPlayerHS.ChangeScore(1);
 
